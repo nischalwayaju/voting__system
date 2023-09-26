@@ -1,20 +1,20 @@
 <?php include 'config.php';
-  include("functions.php");
-	include("connection.php");
 
 session_start();
 if (isset($_SESSION['admin_id'])) {
   header("Location: adminhome.php");
   exit;
 }
+    include("functions.php");
+	  include("connection.php");
+	
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
-		//something was posted
-		$username= $_POST['username'];
-		$password = $_POST['password'];
-    $retrived_hashed_password= hash("sha256", $password);
-    $query = "select * from admin_login where username = '$username' limit 1";
-    $result=mysqli_query($conn,$query);
+		  $username = $_POST['username'];
+		  $password = $_POST['password'];
+      $retrived_hashed_password= hash("sha256", $password);
+      $query = "select * from admin_login where username = '$username' limit 1";
+      $result=mysqli_query($conn,$query);
 
 		if($result)
 		{
@@ -37,18 +37,18 @@ if (isset($_SESSION['admin_id'])) {
 		}
 
 ?>
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="adminlogin.css" />
+    <link rel="stylesheet" href="adminlogin.css?v=<?=$version?>">
     <link href="https://fonts.cdnfonts.com/css/medula-one" rel="stylesheet">
- </head>
-  <body> 
+</head>
+<body> 
     <nav>
       <div class="menu">
         <div class="logo">

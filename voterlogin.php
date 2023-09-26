@@ -8,33 +8,27 @@ if (isset($_SESSION['citizenship'])) {
     include("functions.php");
 	  include("connection.php");
 	
-	if($_SERVER['REQUEST_METHOD'] == "POST")
-	{
-		  $citizenship = $_POST['citizenship'];
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+      $citizenship = $_POST['citizenship'];
 		  $password = $_POST['password'];
-      $retrived_hashed_password= hash("sha256", $password);
-      $query = "select * from registration where citizenship = '$citizenship' limit 1";
-      $result=mysqli_query($conn,$query);
+      $query1 = 'SELECT * FROM registration WHERE citizenship = "' . $citizenship . '" AND password = "' . $password . '"';
+      $query = "SELECT * FROM registration WHERE citizenship = '" . $_POST['citizenship'] . "' AND password = '" . $_POST['password'] . "' LIMIT 1";
 
-		if($result)
-		{
-			if($result && mysqli_num_rows($result) > 0)
-			{
-
-				$user_data = mysqli_fetch_assoc($result);
-					
-				if($user_data['password'] == $retrived_hashed_password)
-				{
-
-					$_SESSION['citizenship'] = $user_data['citizenship'];
-					header("Location: profile.php");
-					exit;
-				}
-			}
-		}
+      $result = mysqli_query($conn, $query1);
+  
+      if ($result && mysqli_num_rows($result) > 0) {
+          $user_data = mysqli_fetch_assoc($result);
+  
+          $_SESSION['citizenship'] = $user_data['citizenship'];
+          header("Location: profile.php");
+          exit;
+      }
+      $password_error="<br>Username or Password is incorrect";  
+   }
+  
 			
-			$password_error="<br>Username or Password is incorrect";
-		}
+			
+		
 
 ?>
 
