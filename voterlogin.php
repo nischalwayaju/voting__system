@@ -10,9 +10,9 @@ if (isset($_SESSION['citizenship'])) {
 	
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $citizenship = $_POST['citizenship'];
-		  $password = $_POST['password'];
+      $password = $_POST['password'];
+      $password=hash("sha256", $password);
       $query1 = 'SELECT * FROM registration WHERE citizenship = "' . $citizenship . '" AND password = "' . $password . '"';
-      $query = "SELECT * FROM registration WHERE citizenship = '" . $_POST['citizenship'] . "' AND password = '" . $_POST['password'] . "' LIMIT 1";
 
       $result = mysqli_query($conn, $query1);
   
